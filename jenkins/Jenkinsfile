@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from your Git repository.
+                checkout scm
+            }
+        }
+        stage('Build C++ Daemon') {
+            steps {
+                dir('src') {
+                    sh 'make clean'
+                    sh 'make'
+                }
+            }
+        }
+        stage('Run Unit Tests') {
+            steps {
+                // Insert your unit test commands here.
+                echo 'Running tests...'
+            }
+        }
+        stage('Build Yocto Image') {
+            steps {
+                echo 'Triggering Yocto build...'
+                // Add your Yocto build command here.
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+                // Insert deployment steps (e.g., triggering Puppet or Chef) here.
+            }
+        }
+    }
+}
